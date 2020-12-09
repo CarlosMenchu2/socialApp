@@ -5,19 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/whatsapp"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"/>
+        <com.github.florent37.shapeofview.shapes.DiagonalView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:elevation="4dp"
+            app:shape_diagonal_angle="10"
+            app:shape_diagonal_direction="left"
+            app:shape_diagonal_position="bottom">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/whatsapp"
+                android:layout_gravity="center"/>
+
+        </com.github.florent37.shapeofview.shapes.DiagonalView>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -28,6 +43,7 @@
             android:layout_marginRight="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="correo electronico"
@@ -45,6 +61,7 @@
             android:layout_marginRight="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="contraseña"
@@ -53,6 +70,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/btnInicioSesion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="INICIAR SESION"
@@ -60,6 +78,13 @@
             android:backgroundTint="@color/colorPrimary"
             android:textColor="#FFFF"
             android:layout_margin="20dp"/>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnLoginGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
 
     </LinearLayout>
 

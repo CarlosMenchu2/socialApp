@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,6 +55,7 @@
             android:layout_marginRight="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="nombre de usuario"
@@ -70,6 +71,7 @@
             android:layout_marginRight="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextEmailR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="correo electronico"
@@ -86,6 +88,7 @@
             android:layout_marginRight="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextPasswordR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="contraseña"
@@ -102,6 +105,7 @@
             android:layout_marginRight="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="confirmar contraseña"
@@ -113,6 +117,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="REGISTRARSE"
@@ -122,7 +127,12 @@
         android:textColor="#ffff"
         android:layout_margin="20dp"/>
 
-
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_margin="15dp"/>
 
 
 

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "479694881614",
+    "project_id": "socialmediaapp-49d6b",
+    "storage_bucket": "socialmediaapp-49d6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479694881614:android:e0419e1976d6cf8cfc941f",
+        "android_client_info": {
+          "package_name": "corporation.app.menchus.com.socialmediagamer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479694881614-gqt7d9p2th61nkvcvtapjobuj7grcn6j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "corporation.app.menchus.com.socialmediagamer",
+            "certificate_hash": "00f2b8c910762ac34702852d6780de5948f5ee14"
+          }
+        },
+        {
+          "client_id": "479694881614-h7g110n03fj6h0l1goin6898ctaldu6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJODrgA2YhsJJi7wHpyjpzSyO1R5Yxr2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479694881614-h7g110n03fj6h0l1goin6898ctaldu6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
