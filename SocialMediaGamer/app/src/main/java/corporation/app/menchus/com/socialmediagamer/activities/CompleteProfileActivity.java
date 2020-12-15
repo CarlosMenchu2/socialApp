@@ -18,20 +18,19 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
 public class CompleteProfileActivity extends AppCompatActivity {
 
 
     TextInputEditText textInputEditTextUsername;
+    TextInputEditText textInputEditTextPhoneNumber;
     Button buttonRegister;
     AuthProvider mAuthProvider;
     UserProvider mUserProvider;
     AlertDialog mDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +38,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_complete_profile);
 
         textInputEditTextUsername = findViewById(R.id.textInputEditTextUsernameC);
+        textInputEditTextPhoneNumber = findViewById(R.id.textInputEditTextPhoneNumberC);
         buttonRegister = findViewById(R.id.btnConfirm);
         mAuthProvider = new AuthProvider();
         mUserProvider = new UserProvider();
@@ -59,11 +59,11 @@ public class CompleteProfileActivity extends AppCompatActivity {
 
     private void register(){
         String username = textInputEditTextUsername.getText().toString();
+        String phoneNumber = textInputEditTextPhoneNumber.getText().toString();
 
+        if(!username.isEmpty() && !phoneNumber.isEmpty()){
 
-        if(!username.isEmpty()){
-
-            updateUser(username);
+            updateUser(username, phoneNumber);
 
         }else{
             Toast.makeText(this, "Ingrese el nombre de usuario", Toast.LENGTH_SHORT).show();
@@ -71,11 +71,13 @@ public class CompleteProfileActivity extends AppCompatActivity {
     }
 
 
-    private void updateUser(final String username) {
+    private void updateUser(final String username, String phoneNumber) {
         String id = mAuthProvider.getUId();
         User user = new User();
         user.setId(id);
         user.setUserName(username);
+        user.setPhoneNumber(phoneNumber);
+        user.setTimestamp(new Date().getTime());
         mDialog.show();
         mUserProvider.update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

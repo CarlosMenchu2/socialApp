@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText textInputEditTextEmail;
     TextInputEditText textInputEditTextPassword;
     TextInputEditText textInputEditTextConfirmPassword;
+    TextInputEditText textInputEditTextPhoneNumber;
     Button buttonRegister;
     AuthProvider mAuthProvider;
     UserProvider mUserProvider;
@@ -47,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         textInputEditTextEmail = findViewById(R.id.textInputEditTextEmailR);
         textInputEditTextPassword = findViewById(R.id.textInputEditTextPasswordR);
         textInputEditTextConfirmPassword = findViewById(R.id.textInputEditTextConfirmPassword);
+        textInputEditTextPhoneNumber = findViewById(R.id.textInputEditTextPhoneNumber);
         buttonRegister = findViewById(R.id.btnRegister);
         mAuthProvider = new AuthProvider();
         mUserProvider = new UserProvider();
@@ -75,13 +78,13 @@ public class RegisterActivity extends AppCompatActivity {
         String email = textInputEditTextEmail.getText().toString();
         String password = textInputEditTextPassword.getText().toString();
         String confirmPassword = textInputEditTextConfirmPassword.getText().toString();
-
-        if(!username.isEmpty() && !email.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty()){
+        String phoneNumber = textInputEditTextPhoneNumber.getText().toString();
+        if(!username.isEmpty() && !email.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty() && !phoneNumber.isEmpty()){
 
             if(isEmailValid(email)){
 
                 if(validatePassword(password,confirmPassword)){
-                    createUser(username,email,password);
+                    createUser(username,email,password,phoneNumber);
                 }
             }
         }else{
@@ -117,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void createUser(final String username,final String email,String password) {
+    private void createUser(final String username, final String email, String password, final String phoneNumber) {
         mDialog.show();
         mAuthProvider.register(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -128,6 +131,8 @@ public class RegisterActivity extends AppCompatActivity {
                     user.setId(id);
                     user.setUserName(username);
                     user.setEmail(email);
+                    user.setPhoneNumber(phoneNumber);
+                    user.setTimestamp(new Date().getTime());
 
                     mUserProvider.create(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

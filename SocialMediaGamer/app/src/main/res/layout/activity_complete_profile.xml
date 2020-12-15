@@ -56,6 +56,22 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_smartphone"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextPhoneNumberC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Telefono"
+                android:inputType="numberSigned"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </LinearLayout>
 

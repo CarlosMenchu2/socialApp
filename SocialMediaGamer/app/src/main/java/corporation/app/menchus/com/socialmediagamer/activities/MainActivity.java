@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 mDialog.dismiss();
                 if(task.isSuccessful()){
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }else {
                     Toast.makeText(MainActivity.this, "Correo o contraseña invalidos", Toast.LENGTH_LONG).show();
