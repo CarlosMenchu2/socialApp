@@ -22,13 +22,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="#000"/>
+
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:src="@drawable/videogamefondo"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
-                    android:transitionName="@string/transitionname_picture"/>
+                    android:transitionName="@string/transitionname_picture"
+                    android:alpha="0.6"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="match_parent"
@@ -116,6 +123,30 @@
                         android:textStyle="bold"
                         android:textSize="15dp"
                         android:layout_marginTop="5dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutEditProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="15dp">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_edit"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Editar perfil"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginLeft="5dp"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
