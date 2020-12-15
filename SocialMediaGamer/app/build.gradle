@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'

@@ -3,6 +3,7 @@ package corporation.app.menchus.com.socialmediagamer.providers;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import corporation.app.menchus.com.socialmediagamer.models.Post;
 
@@ -18,6 +19,10 @@ public class PostProvider {
     public Task<Void> save(Post post){
 
         return mcollection.document().set(post);
+    }
+
+    public Query getAll() {
+        return mcollection.orderBy("title",Query.Direction.DESCENDING);
     }
 
 }
