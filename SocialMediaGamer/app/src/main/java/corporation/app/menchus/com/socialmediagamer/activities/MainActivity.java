@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     UserProvider mUsersProvider;
     AlertDialog mDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 .setCancelable(false).build();
         mAuthProvider = new AuthProvider();
         mUsersProvider = new UserProvider();
+
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -184,5 +186,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mAuthProvider.getUserSesion()!=null){
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 }
