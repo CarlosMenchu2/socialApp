@@ -29,6 +29,7 @@
 
 
                 <ImageView
+                    android:id="@+id/imageViewCoverProfile"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:src="@drawable/videogamefondo"
@@ -38,6 +39,7 @@
                     android:alpha="0.6"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleImageViewProfile2"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
                     android:src="@drawable/ic_person"
@@ -108,6 +110,7 @@
                     android:gravity="center">
 
                     <TextView
+                        android:id="@+id/textViewUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nombre de perfil"
@@ -116,6 +119,7 @@
                         android:textSize="20dp"/>
 
                     <TextView
+                        android:id="@+id/textViewEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="correo@gmail.com"

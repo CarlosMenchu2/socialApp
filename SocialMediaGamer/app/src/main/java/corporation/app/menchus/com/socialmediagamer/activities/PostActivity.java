@@ -65,8 +65,9 @@ public class PostActivity extends AppCompatActivity {
     String description;
     AuthProvider mAuthProvider;
     AlertDialog mDialog;
-    AlertDialog.Builder mBuilderSelector;
     CircleImageView mCircleImageBack;
+
+    AlertDialog.Builder mBuilderSelector;
     CharSequence  options[];
 
     String mAbsolutePhotoPhat;
