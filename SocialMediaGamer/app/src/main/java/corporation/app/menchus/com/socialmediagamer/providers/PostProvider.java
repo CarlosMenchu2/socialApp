@@ -2,6 +2,7 @@ package corporation.app.menchus.com.socialmediagamer.providers;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -27,6 +28,10 @@ public class PostProvider {
 
     public Query getPostByUser(String idUser){
         return mcollection.whereEqualTo("idUser",idUser);
+    }
+
+    public Task<DocumentSnapshot> getPostById(String postId){
+        return mcollection.document(postId).get();
     }
 
 }
