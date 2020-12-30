@@ -124,6 +124,13 @@ public class EditProfileActivity extends AppCompatActivity {
                 selectOptionImage(2);
             }
         });
+
+        mcircleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         getUser();
     }
 
