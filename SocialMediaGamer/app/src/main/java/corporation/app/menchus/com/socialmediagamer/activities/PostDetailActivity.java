@@ -2,7 +2,10 @@ package corporation.app.menchus.com.socialmediagamer.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import corporation.app.menchus.com.socialmediagamer.R;
+import corporation.app.menchus.com.socialmediagamer.adapters.CommentAdapter;
 import corporation.app.menchus.com.socialmediagamer.adapters.SliderAdapter;
 import corporation.app.menchus.com.socialmediagamer.models.Comment;
 import corporation.app.menchus.com.socialmediagamer.models.SliderItem;
@@ -26,11 +29,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -51,6 +56,7 @@ public class PostDetailActivity extends AppCompatActivity {
     CircleImageView mcircleImageViewBack;
     CommentsProvider mCommentsProvider;
     AuthProvider mAuthProvider;
+    CommentAdapter mCommentAdapter;
 
     String mIdUser="";
 
@@ -63,6 +69,7 @@ public class PostDetailActivity extends AppCompatActivity {
     CircleImageView mCircleImageViewProfile;
     Button mButtonShowProfile;
     FloatingActionButton mFloatingActionButton;
+    RecyclerView mrecyclerViewComments;
 
 
     @Override
@@ -87,6 +94,9 @@ public class PostDetailActivity extends AppCompatActivity {
         mButtonShowProfile = findViewById(R.id.btnShowProfile);
         mcircleImageViewBack = findViewById(R.id.circleImageBack);
         mFloatingActionButton = findViewById(R.id.fabComment);
+        mrecyclerViewComments = findViewById(R.id.recyclerViewComments);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PostDetailActivity.this);
+        mrecyclerViewComments.setLayoutManager(linearLayoutManager);
 
         mcircleImageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,10 +121,22 @@ public class PostDetailActivity extends AppCompatActivity {
 
         getPost();
 
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Query query = mCommentsProvider.getCommentsByPost(mExtraPostId);
+        FirestoreRecyclerOptions<Comment> options = new FirestoreRecyclerOptions.Builder<Comment>().setQuery(query,Comment.class).build();
+        mCommentAdapter = new CommentAdapter(options,PostDetailActivity.this);
+        mrecyclerViewComments.setAdapter(mCommentAdapter);
+        mCommentAdapter.startListening();
+    }
 
-
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mCommentAdapter.stopListening();
     }
 
     private void showDialogComment() {
@@ -179,7 +201,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     Toast.makeText(PostDetailActivity.this, "No se creo el comentario", Toast.LENGTH_LONG).show();
                 }
             }
-        })
+        });
 
     }
 
