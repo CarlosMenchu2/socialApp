@@ -1,9 +1,13 @@
 package corporation.app.menchus.com.socialmediagamer.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import corporation.app.menchus.com.socialmediagamer.R;
 import corporation.app.menchus.com.socialmediagamer.adapters.SliderAdapter;
+import corporation.app.menchus.com.socialmediagamer.models.Comment;
 import corporation.app.menchus.com.socialmediagamer.models.SliderItem;
+import corporation.app.menchus.com.socialmediagamer.providers.AuthProvider;
+import corporation.app.menchus.com.socialmediagamer.providers.CommentsProvider;
 import corporation.app.menchus.com.socialmediagamer.providers.PostProvider;
 import corporation.app.menchus.com.socialmediagamer.providers.UserProvider;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -20,8 +24,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -30,6 +37,7 @@ import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PostDetailActivity extends AppCompatActivity {
@@ -41,6 +49,8 @@ public class PostDetailActivity extends AppCompatActivity {
     String mExtraPostId;
     UserProvider mUserProvider;
     CircleImageView mcircleImageViewBack;
+    CommentsProvider mCommentsProvider;
+    AuthProvider mAuthProvider;
 
     String mIdUser="";
 
@@ -63,6 +73,8 @@ public class PostDetailActivity extends AppCompatActivity {
         mPostProvider = new PostProvider();
         mExtraPostId = getIntent().getStringExtra("id");
         mUserProvider = new UserProvider();
+        mCommentsProvider = new CommentsProvider();
+        mAuthProvider = new AuthProvider();
 
         sliderView = findViewById(R.id.imageSlider);
         mTextViewTitle = findViewById(R.id.textViewTitleGame);
@@ -133,6 +145,12 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String value = mEditText.getText().toString();
+                if(!value.isEmpty()){
+                    createComment(value);
+                }else{
+                    Toast.makeText(PostDetailActivity.this, "Ingrese un comentario", Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });
@@ -142,7 +160,27 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
             }
+        });
+    }
+
+    private void createComment(String commentario) {
+
+        Comment comment = new Comment();
+        comment.setComment(commentario);
+        comment.setIdPost(mExtraPostId);
+        comment.setIdUser(mAuthProvider.getUId());
+        comment.setTimestamp(new Date().getTime());
+        mCommentsProvider.create(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(PostDetailActivity.this, "Comentario creado", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(PostDetailActivity.this, "No se creo el comentario", Toast.LENGTH_LONG).show();
+                }
+            }
         })
+
     }
 
     private void goToShowProfile() {
