@@ -13,4 +13,8 @@
         <item name="titleTextColor">@color/colorWhite</item>
     </style>
 
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splashscreen</item>
+    </style>
+
 </resources>

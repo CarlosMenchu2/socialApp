@@ -23,7 +23,7 @@ public class PostProvider {
     }
 
     public Query getAll() {
-        return mcollection.orderBy("title",Query.Direction.DESCENDING);
+        return mcollection.orderBy("timestamp",Query.Direction.DESCENDING);
     }
 
     public Query getPostByUser(String idUser){

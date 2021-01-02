@@ -16,7 +16,8 @@
         <activity android:name=".activities.CompleteProfileActivity" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
