@@ -26,6 +26,7 @@
             app:cardBackgroundColor="@color/colorPrimary"
             app:cardCornerRadius="10dp"
             android:layout_weight="1"
+            app:contentPadding="5dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
 
