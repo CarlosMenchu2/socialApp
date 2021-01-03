@@ -1,6 +1,7 @@
 package corporation.app.menchus.com.socialmediagamer.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,8 +12,10 @@ import corporation.app.menchus.com.socialmediagamer.models.Comment;
 import corporation.app.menchus.com.socialmediagamer.models.SliderItem;
 import corporation.app.menchus.com.socialmediagamer.providers.AuthProvider;
 import corporation.app.menchus.com.socialmediagamer.providers.CommentsProvider;
+import corporation.app.menchus.com.socialmediagamer.providers.LikeProvider;
 import corporation.app.menchus.com.socialmediagamer.providers.PostProvider;
 import corporation.app.menchus.com.socialmediagamer.providers.UserProvider;
+import corporation.app.menchus.com.socialmediagamer.utils.RelativeTime;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.app.AlertDialog;
@@ -35,7 +38,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -56,6 +62,7 @@ public class PostDetailActivity extends AppCompatActivity {
     CircleImageView mcircleImageViewBack;
     CommentsProvider mCommentsProvider;
     AuthProvider mAuthProvider;
+    LikeProvider mLikeProvider;
     CommentAdapter mCommentAdapter;
 
     String mIdUser="";
@@ -65,6 +72,8 @@ public class PostDetailActivity extends AppCompatActivity {
     TextView mTextViewUserName;
     TextView mTextViewPhone;
     TextView mTextViewCategory;
+    TextView mTextViewRelativeTime;
+    TextView mTextViewLikes;
     ImageView mImageViewCategory;
     CircleImageView mCircleImageViewProfile;
     Button mButtonShowProfile;
@@ -82,6 +91,7 @@ public class PostDetailActivity extends AppCompatActivity {
         mUserProvider = new UserProvider();
         mCommentsProvider = new CommentsProvider();
         mAuthProvider = new AuthProvider();
+        mLikeProvider = new LikeProvider();
 
         sliderView = findViewById(R.id.imageSlider);
         mTextViewTitle = findViewById(R.id.textViewTitleGame);
@@ -95,6 +105,8 @@ public class PostDetailActivity extends AppCompatActivity {
         mcircleImageViewBack = findViewById(R.id.circleImageBack);
         mFloatingActionButton = findViewById(R.id.fabComment);
         mrecyclerViewComments = findViewById(R.id.recyclerViewComments);
+        mTextViewRelativeTime = findViewById(R.id.textViewRelativeTime);
+        mTextViewLikes = findViewById(R.id.textViewLikes);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PostDetailActivity.this);
         mrecyclerViewComments.setLayoutManager(linearLayoutManager);
 
@@ -120,7 +132,24 @@ public class PostDetailActivity extends AppCompatActivity {
         });
 
         getPost();
+        getNumberLikes();
 
+    }
+
+    private void getNumberLikes() {
+
+        mLikeProvider.getLikesByPost(mExtraPostId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                int numberLikes = value.size();
+
+                if(numberLikes==1){
+                    mTextViewLikes.setText(String.valueOf(numberLikes)+" Me gusta");
+                }else{
+                    mTextViewLikes.setText(String.valueOf(numberLikes)+" Me gustas");
+                }
+            }
+        });
     }
 
     @Override
@@ -249,6 +278,12 @@ public class PostDetailActivity extends AppCompatActivity {
                         mIdUser = documentSnapshot.getString("idUser");
                         getUserInfo(mIdUser);
                     }
+                    if(documentSnapshot.contains("timestamp")){
+                        long timestamp = documentSnapshot.getLong("timestamp");
+                        String relativeTime = RelativeTime.getTimeAgo(timestamp,PostDetailActivity.this);
+                        mTextViewRelativeTime.setText(relativeTime);
+                    }
+
                     instanceSlider();
                 }
             }
