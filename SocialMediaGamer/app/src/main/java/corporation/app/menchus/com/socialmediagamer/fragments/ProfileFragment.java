@@ -13,14 +13,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import corporation.app.menchus.com.socialmediagamer.R;
 import corporation.app.menchus.com.socialmediagamer.activities.EditProfileActivity;
+import corporation.app.menchus.com.socialmediagamer.adapters.MyPostAdapter;
+import corporation.app.menchus.com.socialmediagamer.models.Post;
 import corporation.app.menchus.com.socialmediagamer.providers.AuthProvider;
 import corporation.app.menchus.com.socialmediagamer.providers.PostProvider;
 import corporation.app.menchus.com.socialmediagamer.providers.UserProvider;
@@ -39,10 +45,13 @@ public class ProfileFragment extends Fragment {
     TextView mTextViewPhoneNumber;
     TextView mTextViewNumberPublications;
     TextView mTextViewEmail;
+    RecyclerView mRecyclerViewMyPosts;
 
     UserProvider mUserProvider;
     AuthProvider mAuthProvider;
     PostProvider mPostProvider;
+
+    MyPostAdapter mMyPostAdapter;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -60,10 +69,14 @@ public class ProfileFragment extends Fragment {
         mTextViewPhoneNumber = mView.findViewById(R.id.textViewPhoneNumber);
         mTextViewNumberPublications = mView.findViewById(R.id.textViewNumberPublications);
         mTextViewEmail = mView.findViewById(R.id.textViewEmail);
+        mRecyclerViewMyPosts = mView.findViewById(R.id.recyclerViewMyPost);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerViewMyPosts.setLayoutManager(linearLayoutManager);
 
         mUserProvider = new UserProvider();
         mAuthProvider = new AuthProvider();
         mPostProvider = new PostProvider();
+
         mLinearLayoutEditProfile = mView.findViewById(R.id.linearLayoutEditProfile);
         mLinearLayoutEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +87,25 @@ public class ProfileFragment extends Fragment {
         getUser();
         getPostNumber();
         return mView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Query query = mPostProvider.getPostByUser(mAuthProvider.getUId());
+        FirestoreRecyclerOptions<Post> options =
+                new FirestoreRecyclerOptions.Builder<Post>()
+                .setQuery(query,Post.class)
+                .build();
+        mMyPostAdapter = new MyPostAdapter(options,getContext());
+        mRecyclerViewMyPosts.setAdapter(mMyPostAdapter);
+        mMyPostAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mMyPostAdapter.stopListening();
     }
 
     private void gotoEditProfile() {

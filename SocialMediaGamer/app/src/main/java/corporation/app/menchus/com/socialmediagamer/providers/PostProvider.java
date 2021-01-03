@@ -34,4 +34,8 @@ public class PostProvider {
         return mcollection.document(postId).get();
     }
 
+    public Task<Void> delete(String id){
+        return mcollection.document(id).delete();
+    }
+
 }
